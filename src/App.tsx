@@ -282,12 +282,12 @@ function App() {
         <TabbedStatsSection />
       </div>
 
-      <div id="projects" ref={mapSectionRef} className="map-section relative min-h-screen bg-gray-950">
+      <div id="projects" ref={mapSectionRef} className="map-section relative min-h-screen bg-gray-900">
         <div className="absolute inset-0">
           <img
             src="https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png"
             alt="Kocaeli İzometrik Harita"
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-70"
           />
         </div>
         <div className="relative h-screen flex items-center justify-center p-8">
