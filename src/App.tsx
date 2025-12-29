@@ -229,13 +229,17 @@ function App() {
         <div className="relative z-10">
           <Hero videoRef={videoRef} />
 
-          <LiveCityData containerRef={dataSectionRef} />
+          <div id="data">
+            <LiveCityData containerRef={dataSectionRef} />
+          </div>
 
           <ScrollFlipCards />
 
           <InteractiveCityMap />
 
-          <TabbedStatsSection />
+          <div id="open-data">
+            <TabbedStatsSection />
+          </div>
         </div>
 
         <div id="projects" ref={mapSectionRef} className="map-section relative z-10 min-h-screen bg-gray-900">
@@ -257,11 +261,11 @@ function App() {
           </div>
         </div>
 
-        <div className="relative z-10">
+        <div id="about" className="relative z-10">
           <FeaturedProjects />
         </div>
 
-        <div className="relative z-10">
+        <div id="feedback" className="relative z-10">
           <CitizenIdeas />
         </div>
 
