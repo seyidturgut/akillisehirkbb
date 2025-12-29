@@ -259,7 +259,7 @@ function App() {
       >
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover opacity-75"
           src={videos[currentVideoIndex]}
           autoPlay
           muted
@@ -267,7 +267,7 @@ function App() {
           onEnded={handleVideoEnded}
           preload="auto"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-transparent to-gray-900/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-transparent to-gray-900/50" />
       </div>
 
       <div className="relative z-10">
