@@ -346,8 +346,8 @@ export const InteractiveCityMap: React.FC = () => {
               }}
             />
 
-            {/* Remove dark gradient for maximum clarity */}
-            <div className="absolute inset-0 bg-black/10" />
+            {/* Subtle mask for icon contrast while keeping map clear */}
+            <div className="absolute inset-0 bg-black/25" />
 
             <div
               className="absolute inset-0"

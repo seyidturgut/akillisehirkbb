@@ -286,6 +286,7 @@ function App() {
             alt="Kocaeli İzometrik Harita"
             className="w-full h-full object-cover opacity-100"
           />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         </div>
         <div className="relative h-screen flex items-center justify-center p-8">
           <div className="w-full max-w-7xl h-[80vh] relative">
