@@ -5,9 +5,11 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { LiveCityData } from './components/LiveCityData';
 import { ScrollFlipCards } from './components/ScrollFlipCards';
+import { Header } from './components/Header';
+import { Hero } from './components/Hero';
+import { LiveCityData } from './components/LiveCityData';
+import { ScrollFlipCards } from './components/ScrollFlipCards';
 import { InteractiveCityMap } from './components/InteractiveCityMap';
-import { CityMap } from './components/CityMap';
-import { ProjectModal } from './components/ProjectModal';
 import { TabbedStatsSection } from './components/TabbedStatsSection';
 import { FeaturedProjects } from './components/FeaturedProjects';
 import { CitizenIdeas } from './components/CitizenIdeas';
@@ -29,9 +31,7 @@ const videos = [
 ];
 
 function App() {
-  const [zones, setZones] = useState<CityZone[]>([]);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [selectedZone, setSelectedZone] = useState<CityZone | null>(null);
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -48,28 +48,6 @@ function App() {
     loadAllData();
   }, []);
 
-  useEffect(() => {
-    if (!selectedZone) return;
-
-    const handleScroll = () => {
-      setSelectedZone(null);
-    };
-
-    const timeoutId = setTimeout(() => {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [selectedZone]);
-
-  useEffect(() => {
-    if (zones.length > 0 && mapSectionRef.current) {
-      setupScrollAnimations();
-    }
-  }, [zones]);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -115,8 +93,6 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, 800));
       setLoadingProgress(40);
 
-      // Load zones from mock data
-      setZones(mockZones);
       setLoadingProgress(70);
 
       await new Promise(resolve => setTimeout(resolve, 400));
@@ -141,43 +117,6 @@ function App() {
     }
   };
 
-  const setupScrollAnimations = () => {
-    const ctx = gsap.context(() => {
-      gsap.from('.map-section', {
-        opacity: 0,
-        scale: 0.9,
-        duration: 1,
-        scrollTrigger: {
-          trigger: '.map-section',
-          start: 'top 80%',
-          end: 'top 50%',
-          scrub: 1,
-        },
-      });
-
-      gsap.to('.footer-lights', {
-        opacity: 0.8,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      gsap.utils.toArray('.bg-blob').forEach((blob: any, index) => {
-        gsap.to(blob, {
-          x: `${Math.sin(index) * 100}`,
-          y: `${Math.cos(index) * 100}`,
-          scale: 1.2,
-          duration: 8 + index * 2,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        });
-      });
-    }, mapSectionRef);
-
-    return () => ctx.revert();
-  };
 
   return (
     <div className="relative bg-[#050510] min-h-screen">
@@ -252,24 +191,6 @@ function App() {
           </div>
         </div>
 
-        <div id="projects" ref={mapSectionRef} className="map-section relative z-10 min-h-screen bg-gray-900">
-          <div className="absolute inset-0">
-            <img
-              src="https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png"
-              alt="Kocaeli İzometrik Harita"
-              className="w-full h-full object-cover opacity-100"
-            />
-            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-          </div>
-          <div className="relative h-screen flex items-center justify-center p-8">
-            <div className="w-full max-w-7xl h-[80vh] relative">
-              <CityMap
-                zones={zones}
-                onZoneClick={setSelectedZone}
-              />
-            </div>
-          </div>
-        </div>
 
         <div id="about" className="relative z-10">
           <FeaturedProjects />
@@ -307,9 +228,6 @@ function App() {
           </div>
         </footer>
 
-        {selectedZone && (
-          <ProjectModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
-        )}
       </div>
 
       {showARMenuModal && (
