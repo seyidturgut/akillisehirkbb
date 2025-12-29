@@ -13,7 +13,8 @@ import { FeaturedProjects } from './components/FeaturedProjects';
 import { CitizenIdeas } from './components/CitizenIdeas';
 import { LoadingScreen } from './components/LoadingScreen';
 import { ARCityGuide } from './features/ARCityGuide/components/ARCityGuide';
-import { MapPin, Globe } from 'lucide-react';
+import { ARComplaint } from './features/ARComplaint/components/ARComplaint';
+import { MapPin, Globe, AlertCircle } from 'lucide-react';
 import { CityZone } from './lib/supabase';
 import { mockZones } from './data/mockData';
 
@@ -32,6 +33,7 @@ function App() {
   const [fadeOut, setFadeOut] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showARGuide, setShowARGuide] = useState(false);
+  const [showARComplaint, setShowARComplaint] = useState(false);
   const mapSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -305,8 +307,23 @@ function App() {
         )}
       </div>
 
-      {/* AR City Guide Toggle & Module */}
-      <div className="fixed bottom-8 left-8 z-[1000]">
+      {/* AR City Guide & Complaint Toggles */}
+      <div className="fixed bottom-8 left-8 z-[1000] flex flex-col gap-4">
+        <button
+          onClick={() => setShowARComplaint(true)}
+          className="group relative flex items-center gap-3 px-6 py-4 bg-red-600 hover:bg-red-500 text-white font-bold rounded-2xl shadow-[0_20px_50px_rgba(220,38,38,0.4)] transition-all duration-300 hover:scale-105 active:scale-95"
+        >
+          <div className="relative">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <span className="max-w-[0px] overflow-hidden whitespace-nowrap group-hover:max-w-[200px] transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+            Sorun Bildir (AR)
+          </span>
+          <div className="absolute bottom-full left-0 mb-4 px-3 py-2 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-lg text-xs font-medium text-red-200 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none translate-y-2 group-hover:translate-y-0 duration-300">
+            Hızlı Şikayet Bildirimi
+          </div>
+        </button>
+
         <button
           onClick={() => setShowARGuide(true)}
           className="group relative flex items-center gap-3 px-6 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 active:scale-95"
@@ -318,8 +335,6 @@ function App() {
           <span className="max-w-[0px] overflow-hidden whitespace-nowrap group-hover:max-w-[200px] transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
             Şehri Keşfet (AR)
           </span>
-
-          {/* Tooltip hint for desktop */}
           <div className="absolute bottom-full left-0 mb-4 px-3 py-2 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-lg text-xs font-medium text-blue-200 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none translate-y-2 group-hover:translate-y-0 duration-300">
             AR Rehberi & Etkileşimli Görünüm
           </div>
@@ -328,6 +343,10 @@ function App() {
 
       {showARGuide && (
         <ARCityGuide onClose={() => setShowARGuide(false)} />
+      )}
+
+      {showARComplaint && (
+        <ARComplaint onClose={() => setShowARComplaint(false)} />
       )}
     </div>
   );
