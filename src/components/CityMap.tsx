@@ -33,7 +33,7 @@ export const CityMap: React.FC<CityMapProps> = ({ zones, activeZoneIndex, onZone
         }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-gray-900/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-gray-900/40" />
 
       <ConnectionPaths zones={zones} activeIndex={activeZoneIndex} />
       <DynamicCityElements />
