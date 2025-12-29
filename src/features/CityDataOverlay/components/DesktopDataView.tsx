@@ -14,11 +14,14 @@ export const DesktopDataView: React.FC = () => {
     }, []);
 
     return (
-        <div className="relative w-full h-full flex items-center justify-center bg-slate-950/40 backdrop-blur-xl rounded-3xl border border-white/5 overflow-hidden p-12">
+        <div className="relative w-full h-full flex items-center justify-center bg-slate-950/40 backdrop-blur-xl rounded-3xl border border-white/5 overflow-hidden p-12 transition-colors duration-[2000ms]"
+            style={{ backgroundColor: `${data.airQuality.color}15` }}>
             {/* Background Visualization */}
             <div className="absolute inset-0 z-0 opacity-20 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/10 rounded-full animate-ping" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/10 rounded-full animate-pulse" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/10 rounded-full animate-ping"
+                    style={{ borderColor: data.airQuality.color }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/10 rounded-full animate-pulse"
+                    style={{ borderColor: data.airQuality.color }} />
             </div>
 
             <div className="relative z-10 w-full flex flex-col md:flex-row gap-12 items-center">

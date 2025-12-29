@@ -1,8 +1,9 @@
 export interface CityLiveData {
     airQuality: {
         value: number;
-        label: 'İyi' | 'Orta' | 'Kötü';
+        label: string;
         color: string;
+        description: string;
     };
     traffic: {
         density: number; // 0-100
@@ -18,9 +19,10 @@ export interface CityLiveData {
 
 export const initialLiveData: CityLiveData = {
     airQuality: {
-        value: 12,
+        value: 42,
         label: 'İyi',
-        color: '#10b981' // emerald-500
+        color: '#00e400', // Green
+        description: 'Hava kalitesi tatmin edici ve az riskli.'
     },
     traffic: {
         density: 35,
@@ -34,17 +36,25 @@ export const initialLiveData: CityLiveData = {
     }
 };
 
-// Simulation helper
 export const simulateDataChange = (current: CityLiveData): CityLiveData => {
     const newDensity = Math.max(0, Math.min(100, current.traffic.density + (Math.random() * 4 - 2)));
+    const newVal = Math.max(0, Math.min(500, current.airQuality.value + (Math.random() * 10 - 5)));
+
+    let aqiInfo = { label: 'İyi', color: '#00e400', desc: 'Hava kalitesi tatmin edici ve az riskli.' };
+
+    if (newVal > 300) aqiInfo = { label: 'Tehlikeli', color: '#7e0023', desc: 'Acil durum; herkes etkilenebilir.' };
+    else if (newVal > 200) aqiInfo = { label: 'Çok Sağlıksız', color: '#8f3f97', desc: 'Sağlık uyarısı; herkes risk altında.' };
+    else if (newVal > 150) aqiInfo = { label: 'Sağlıksız', color: '#ff0000', desc: 'Sağlık etkileri görülebilir.' };
+    else if (newVal > 100) aqiInfo = { label: 'Hassas Gruplar İçin Sağlıksız', color: '#ff7e00', desc: 'Hassas gruplar etkilenebilir.' };
+    else if (newVal > 50) aqiInfo = { label: 'Orta', color: '#ffff00', desc: 'Hava kalitesi kabul edilebilir.' };
 
     return {
         ...current,
         airQuality: {
-            ...current.airQuality,
-            value: Math.max(0, current.airQuality.value + (Math.random() * 2 - 1)),
-            label: current.airQuality.value < 50 ? 'İyi' : current.airQuality.value < 100 ? 'Orta' : 'Kötü',
-            color: current.airQuality.value < 50 ? '#10b981' : current.airQuality.value < 100 ? '#f59e0b' : '#ef4444'
+            value: newVal,
+            label: aqiInfo.label,
+            color: aqiInfo.color,
+            description: aqiInfo.desc
         },
         traffic: {
             ...current.traffic,
