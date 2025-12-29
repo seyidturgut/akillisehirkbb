@@ -310,36 +310,25 @@ function App() {
         )}
       </div>
 
-      {selectedZone && (
-        <ProjectModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
+      {/* AR Features Launcher (Consolidated Drawer) */}
+      <ARToolbox
+        onOpenGuide={() => setShowARGuide(true)}
+        onOpenComplaint={() => setShowARComplaint(true)}
+        onOpenData={() => setShowDataOverlay(true)}
+      />
+
+      {showARGuide && (
+        <ARCityGuide onClose={() => setShowARGuide(false)} />
+      )}
+
+      {showARComplaint && (
+        <ARComplaint onClose={() => setShowARComplaint(false)} />
+      )}
+
+      {showDataOverlay && (
+        <CityDataOverlay onClose={() => setShowDataOverlay(false)} />
       )}
     </div>
-
-      {/* AR Features Launcher (Consolidated Drawer) */ }
-  <ARToolbox
-    onOpenGuide={() => setShowARGuide(true)}
-    onOpenComplaint={() => setShowARComplaint(true)}
-    onOpenData={() => setShowDataOverlay(true)}
-  />
-
-  {
-    showARGuide && (
-      <ARCityGuide onClose={() => setShowARGuide(false)} />
-    )
-  }
-
-  {
-    showARComplaint && (
-      <ARComplaint onClose={() => setShowARComplaint(false)} />
-    )
-  }
-
-  {
-    showDataOverlay && (
-      <CityDataOverlay onClose={() => setShowDataOverlay(false)} />
-    )
-  }
-    </div >
   );
 }
 
