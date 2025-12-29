@@ -7,11 +7,11 @@ import { CityZone as CityZoneType } from '../lib/supabase';
 
 interface CityMapProps {
   zones: CityZoneType[];
-  activeZoneIndex: number;
+  activeZoneIndex?: number;
   onZoneClick: (zone: CityZoneType) => void;
 }
 
-export const CityMap: React.FC<CityMapProps> = ({ zones, activeZoneIndex, onZoneClick }) => {
+export const CityMap: React.FC<CityMapProps> = ({ zones, activeZoneIndex = 0, onZoneClick }) => {
   const [hoveredZone, setHoveredZone] = useState<CityZoneType | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -21,20 +21,6 @@ export const CityMap: React.FC<CityMapProps> = ({ zones, activeZoneIndex, onZone
 
   return (
     <div className="relative w-full h-full" onMouseMove={handleMouseMove}>
-      <video
-        className="absolute inset-0 w-full h-full object-cover"
-        src="https://beyincikisleri.co/customer/akillikbb/sehir-bg-anim.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          filter: 'brightness(0.95) contrast(1.1)',
-        }}
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-gray-900/40" />
-
       <ConnectionPaths zones={zones} activeIndex={activeZoneIndex} />
       <DynamicCityElements />
 

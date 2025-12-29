@@ -267,7 +267,7 @@ export const CitizenIdeas: React.FC = () => {
   };
 
   return (
-    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden">
+    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden bg-gray-900 z-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-blue-500/20 border border-emerald-500/30 mb-6">

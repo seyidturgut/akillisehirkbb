@@ -3,13 +3,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { ScrollVideo } from './components/ScrollVideo';
 import { LiveCityData } from './components/LiveCityData';
 import { ScrollFlipCards } from './components/ScrollFlipCards';
 import { InteractiveCityMap } from './components/InteractiveCityMap';
 import { CityMap } from './components/CityMap';
 import { ProjectModal } from './components/ProjectModal';
-import { TransportationStats } from './components/TransportationStats';
 import { TabbedStatsSection } from './components/TabbedStatsSection';
 import { FeaturedProjects } from './components/FeaturedProjects';
 import { CitizenIdeas } from './components/CitizenIdeas';
@@ -25,7 +23,6 @@ const videos = [
 
 function App() {
   const [zones, setZones] = useState<CityZone[]>([]);
-  const [activeZoneIndex, setActiveZoneIndex] = useState(0);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [selectedZone, setSelectedZone] = useState<CityZone | null>(null);
   const [loading, setLoading] = useState(true);
@@ -282,19 +279,18 @@ function App() {
         <TabbedStatsSection />
       </div>
 
-      <div id="projects" ref={mapSectionRef} className="map-section relative min-h-screen bg-gray-900">
+      <div id="projects" ref={mapSectionRef} className="map-section relative z-10 min-h-screen bg-gray-900">
         <div className="absolute inset-0">
           <img
             src="https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png"
             alt="Kocaeli İzometrik Harita"
-            className="w-full h-full object-cover opacity-70"
+            className="w-full h-full object-cover opacity-85"
           />
         </div>
         <div className="relative h-screen flex items-center justify-center p-8">
           <div className="w-full max-w-7xl h-[80vh] relative">
             <CityMap
               zones={zones}
-              activeZoneIndex={activeZoneIndex}
               onZoneClick={setSelectedZone}
             />
           </div>

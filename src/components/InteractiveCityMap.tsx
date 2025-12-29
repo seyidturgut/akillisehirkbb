@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  MapPin,
   Wifi,
   Camera,
   Lightbulb,
@@ -26,7 +25,7 @@ interface DataPoint {
     label: string;
     value: string;
   }[];
-  icon: React.FC<{ className?: string }>;
+  icon: React.FC<{ className?: string; color?: string }>;
   color: string;
   url?: string;
 }
@@ -343,11 +342,11 @@ export const InteractiveCityMap: React.FC = () => {
                 backgroundImage: 'url(https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                opacity: 0.7,
+                opacity: 0.8,
               }}
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-gray-900/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/30 to-gray-900/40" />
 
             <div
               className="absolute inset-0"
@@ -381,7 +380,7 @@ export const InteractiveCityMap: React.FC = () => {
                       backgroundColor: `${point.color}30`,
                     }}
                   >
-                    <point.icon className="w-6 h-6" style={{ color: point.color }} />
+                    <point.icon className="w-6 h-6" color={point.color} />
                   </div>
 
                   <div
@@ -436,7 +435,7 @@ export const InteractiveCityMap: React.FC = () => {
                     backgroundColor: `${selectedPoint.color}30`,
                   }}
                 >
-                  <selectedPoint.icon className="w-7 h-7" style={{ color: selectedPoint.color }} />
+                  <selectedPoint.icon className="w-7 h-7" color={selectedPoint.color} />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-1">{selectedPoint.title}</h3>
