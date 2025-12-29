@@ -343,11 +343,11 @@ export const InteractiveCityMap: React.FC = () => {
                 backgroundImage: 'url(https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                opacity: 0.4,
+                opacity: 0.7,
               }}
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/60 to-gray-900/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-gray-900/50" />
 
             <div
               className="absolute inset-0"
