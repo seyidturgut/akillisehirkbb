@@ -336,18 +336,17 @@ export const InteractiveCityMap: React.FC = () => {
 
         <div className="map-container relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl">
           <div className="relative w-full h-[600px] rounded-2xl overflow-hidden">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: 'url(https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                opacity: 1,
-              }}
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              src="https://beyincikisleri.co/customer/akillikbb/sehir-bg-anim.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
             />
 
-            {/* Subtle mask for icon contrast while keeping map clear */}
-            <div className="absolute inset-0 bg-black/25" />
+            {/* Subtle mask for icon contrast over video */}
+            <div className="absolute inset-0 bg-black/30" />
 
             <div
               className="absolute inset-0"
