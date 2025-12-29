@@ -5,10 +5,6 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { LiveCityData } from './components/LiveCityData';
 import { ScrollFlipCards } from './components/ScrollFlipCards';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { LiveCityData } from './components/LiveCityData';
-import { ScrollFlipCards } from './components/ScrollFlipCards';
 import { InteractiveCityMap } from './components/InteractiveCityMap';
 import { TabbedStatsSection } from './components/TabbedStatsSection';
 import { FeaturedProjects } from './components/FeaturedProjects';
@@ -39,7 +35,6 @@ function App() {
   const [showARComplaint, setShowARComplaint] = useState(false);
   const [showDataOverlay, setShowDataOverlay] = useState(false);
   const [showARMenuModal, setShowARMenuModal] = useState(false);
-  const mapSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const dataSectionRef = useRef<HTMLDivElement>(null);
