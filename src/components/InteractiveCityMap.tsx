@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Portal } from './Portal';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -29,6 +30,7 @@ interface DataPoint {
   color: string;
   url?: string;
 }
+
 
 export const InteractiveCityMap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -419,73 +421,75 @@ export const InteractiveCityMap: React.FC = () => {
       </div>
 
       {selectedPoint && (
-        <div
-          className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center z-[1000] animate-in fade-in duration-200"
-          onClick={() => setSelectedPoint(null)}
-        >
+        <Portal>
           <div
-            className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-xl rounded-2xl p-8 max-w-md w-full mx-4 border border-white/20 shadow-2xl animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center z-[2000] animate-in fade-in duration-200"
+            onClick={() => setSelectedPoint(null)}
           >
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
-                  style={{
-                    backgroundColor: `${selectedPoint.color}30`,
-                  }}
+            <div
+              className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-xl rounded-2xl p-8 max-w-md w-full mx-4 border border-white/20 shadow-2xl animate-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
+                    style={{
+                      backgroundColor: `${selectedPoint.color}30`,
+                    }}
+                  >
+                    <selectedPoint.icon className="w-7 h-7" color={selectedPoint.color} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">{selectedPoint.title}</h3>
+                    <p className="text-sm text-gray-400">{selectedPoint.description}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedPoint(null)}
+                  className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
                 >
-                  <selectedPoint.icon className="w-7 h-7" color={selectedPoint.color} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-1">{selectedPoint.title}</h3>
-                  <p className="text-sm text-gray-400">{selectedPoint.description}</p>
-                </div>
+                  <X className="w-5 h-5 text-gray-300" />
+                </button>
               </div>
-              <button
-                onClick={() => setSelectedPoint(null)}
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-300" />
-              </button>
-            </div>
 
-            <div className="space-y-3">
-              {selectedPoint.data.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10"
-                >
-                  <span className="text-gray-400 text-sm font-medium">{item.label}</span>
-                  <span className="text-white text-lg font-bold">{item.value}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 flex items-center gap-2 p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-              <div className={`w-2 h-2 rounded-full ${getStatusColor(selectedPoint.status)}`} />
-              <span className="text-emerald-300 text-sm font-semibold">
-                {selectedPoint.status === 'active' && 'Çalışıyor'}
-                {selectedPoint.status === 'warning' && 'Uyarı Durumu'}
-                {selectedPoint.status === 'inactive' && 'Pasif'}
-              </span>
-            </div>
-
-            {selectedPoint.type === 'livecam' && selectedPoint.url && (
-              <div className="mt-6">
-                <a
-                  href={selectedPoint.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-6 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
-                >
-                  <Camera className="w-5 h-5" />
-                  <span>Canlı Yayını İzle</span>
-                </a>
+              <div className="space-y-3">
+                {selectedPoint.data.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10"
+                  >
+                    <span className="text-gray-400 text-sm font-medium">{item.label}</span>
+                    <span className="text-white text-lg font-bold">{item.value}</span>
+                  </div>
+                ))}
               </div>
-            )}
+
+              <div className="mt-6 flex items-center gap-2 p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                <div className={`w-2 h-2 rounded-full ${getStatusColor(selectedPoint.status)}`} />
+                <span className="text-emerald-300 text-sm font-semibold">
+                  {selectedPoint.status === 'active' && 'Çalışıyor'}
+                  {selectedPoint.status === 'warning' && 'Uyarı Durumu'}
+                  {selectedPoint.status === 'inactive' && 'Pasif'}
+                </span>
+              </div>
+
+              {selectedPoint.type === 'livecam' && selectedPoint.url && (
+                <div className="mt-6">
+                  <a
+                    href={selectedPoint.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 px-6 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
+                  >
+                    <Camera className="w-5 h-5" />
+                    <span>Canlı Yayını İzle</span>
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </Portal>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Portal } from './Portal';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -42,6 +43,7 @@ interface Project {
   }[];
   features: string[];
 }
+
 
 export const FeaturedProjects: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -238,7 +240,6 @@ export const FeaturedProjects: React.FC = () => {
       setSelectedProject(null);
     };
 
-    // We add a small delay to avoid immediate closure if the click triggers a tiny scroll
     const timeoutId = setTimeout(() => {
       window.addEventListener('scroll', handleScroll, { passive: true });
     }, 100);
@@ -250,7 +251,6 @@ export const FeaturedProjects: React.FC = () => {
   }, [selectedProject]);
 
   useEffect(() => {
-    // Simüle edilmiş yükleme (gerçek projede API'den gelecek)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 800);
@@ -259,8 +259,6 @@ export const FeaturedProjects: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // ScrollTrigger.refresh is still useful to ensure layout is correct 
-    // but we remove the specific animations as requested.
     if (!isLoading) {
       ScrollTrigger.refresh();
     }
@@ -434,145 +432,144 @@ export const FeaturedProjects: React.FC = () => {
       </div>
 
       {selectedProject && (
-        <div
-          className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 animate-in fade-in duration-200"
-          onClick={() => setSelectedProject(null)}
-        >
+        <Portal>
           <div
-            className="bg-gradient-to-br from-gray-800 to-gray-900 backdrop-blur-xl rounded-3xl max-w-4xl w-full max-h-[90vh] border border-white/20 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col md:flex-row overflow-hidden relative"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-200"
+            onClick={() => setSelectedProject(null)}
           >
-            {/* Close Button - Stays fixed relative to the modal container */}
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/80 hover:bg-black backdrop-blur-xl flex items-center justify-center transition-all border border-white/30 shadow-2xl z-[1010] ring-1 ring-white/10"
+            <div
+              className="bg-gradient-to-br from-gray-800 to-gray-900 backdrop-blur-xl rounded-3xl max-w-4xl w-full max-h-[90vh] border border-white/20 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col md:flex-row overflow-hidden relative"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-5 h-5 text-white" />
-            </button>
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/80 hover:bg-black backdrop-blur-xl flex items-center justify-center transition-all border border-white/30 shadow-2xl z-[1010] ring-1 ring-white/10"
+              >
+                <X className="w-5 h-5 text-white" />
+              </button>
 
-            {/* Left Column: Image */}
-            <div className="relative w-full md:w-[40%] h-40 md:h-auto shrink-0 border-b md:border-b-0 md:border-r border-white/10">
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-gray-900/60 via-transparent to-transparent md:from-transparent md:to-gray-900/20" />
+              <div className="relative w-full md:w-[40%] h-40 md:h-auto shrink-0 border-b md:border-b-0 md:border-r border-white/10">
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-gray-900/60 via-transparent to-transparent md:from-transparent md:to-gray-900/20" />
 
-              <div className="absolute bottom-6 left-6 right-6 md:hidden">
-                <div className="flex items-center gap-4">
+                <div className="absolute bottom-6 left-6 right-6 md:hidden">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-xl"
+                      style={{ backgroundColor: `${selectedProject.color}40` }}
+                    >
+                      <selectedProject.icon className="w-6 h-6" color={selectedProject.color} />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-blue-400 block mb-0.5">
+                        {selectedProject.category}
+                      </span>
+                      <h3 className="text-xl font-bold text-white leading-tight">{selectedProject.title}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full md:w-[60%] p-6 md:p-8 overflow-y-auto">
+                <div className="hidden md:flex items-center gap-4 mb-6">
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-xl"
+                    className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-xl shrink-0"
                     style={{ backgroundColor: `${selectedProject.color}40` }}
                   >
-                    <selectedProject.icon className="w-6 h-6" color={selectedProject.color} />
+                    <selectedProject.icon className="w-8 h-8" color={selectedProject.color} />
                   </div>
                   <div>
                     <span className="text-xs font-bold text-blue-400 block mb-0.5">
                       {selectedProject.category}
                     </span>
-                    <h3 className="text-xl font-bold text-white leading-tight">{selectedProject.title}</h3>
+                    <h3 className="text-2xl font-bold text-white leading-tight">{selectedProject.title}</h3>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Right Column: Content */}
-            <div className="w-full md:w-[60%] p-6 md:p-8 overflow-y-auto">
-              <div className="hidden md:flex items-center gap-4 mb-6">
-                <div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-xl shrink-0"
-                  style={{ backgroundColor: `${selectedProject.color}40` }}
-                >
-                  <selectedProject.icon className="w-8 h-8" color={selectedProject.color} />
-                </div>
-                <div>
-                  <span className="text-xs font-bold text-blue-400 block mb-0.5">
-                    {selectedProject.category}
-                  </span>
-                  <h3 className="text-2xl font-bold text-white leading-tight">{selectedProject.title}</h3>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 mb-6 flex-wrap">
-                <span
-                  className={`px-4 py-2 rounded-full text-sm font-bold backdrop-blur-xl border ${getStatusBadge(selectedProject.status).color
-                    }`}
-                >
-                  {getStatusBadge(selectedProject.status).label}
-                </span>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <MapPin className="w-4 h-4" />
-                  <span>{selectedProject.location}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <Clock className="w-4 h-4" />
-                  <span>
-                    {selectedProject.startDate} - {selectedProject.endDate || 'Devam Ediyor'}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-gray-300 text-sm mb-6 leading-relaxed">
-                {selectedProject.longDescription}
-              </p>
-
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                {selectedProject.stats.map((stat, index) => (
-                  <div
-                    key={index}
-                    className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10"
+                <div className="flex items-center gap-3 mb-6 flex-wrap">
+                  <span
+                    className={`px-4 py-2 rounded-full text-sm font-bold backdrop-blur-xl border ${getStatusBadge(selectedProject.status).color
+                      }`}
                   >
-                    <stat.icon className="w-4 h-4 text-blue-400 mb-2" />
-                    <p className="text-lg font-bold text-white mb-0.5">{stat.value}</p>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest">{stat.label}</p>
+                    {getStatusBadge(selectedProject.status).label}
+                  </span>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <MapPin className="w-4 h-4" />
+                    <span>{selectedProject.location}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <Clock className="w-4 h-4" />
+                    <span>
+                      {selectedProject.startDate} - {selectedProject.endDate || 'Devam Ediyor'}
+                    </span>
+                  </div>
+                </div>
 
-              {selectedProject.status !== 'completed' && (
-                <div className="mb-6 bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 border border-white/10">
-                  <div className="flex items-center justify-between text-[10px] text-gray-300 mb-2">
-                    <span className="font-semibold uppercase tracking-wider">İlerleme</span>
-                    <span className="font-bold text-white text-base">{selectedProject.progress}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                <p className="text-gray-300 text-sm mb-6 leading-relaxed">
+                  {selectedProject.longDescription}
+                </p>
+
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {selectedProject.stats.map((stat, index) => (
                     <div
-                      className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500 transition-all duration-1000 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
-                      style={{ width: `${selectedProject.progress}%` }}
-                    />
+                      key={index}
+                      className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10"
+                    >
+                      <stat.icon className="w-4 h-4 text-blue-400 mb-2" />
+                      <p className="text-lg font-bold text-white mb-0.5">{stat.value}</p>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-widest">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {selectedProject.status !== 'completed' && (
+                  <div className="mb-6 bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 border border-white/10">
+                    <div className="flex items-center justify-between text-[10px] text-gray-300 mb-2">
+                      <span className="font-semibold uppercase tracking-wider">İlerleme</span>
+                      <span className="font-bold text-white text-base">{selectedProject.progress}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500 transition-all duration-1000 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                        style={{ width: `${selectedProject.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10">
+                    <p className="text-[10px] text-gray-400 mb-1 uppercase tracking-widest">Bütçe</p>
+                    <p className="text-lg font-bold text-white">{selectedProject.budget}</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10">
+                    <p className="text-[10px] text-gray-400 mb-1 uppercase tracking-widest">Faydalanıcı</p>
+                    <p className="text-lg font-bold text-white">{selectedProject.beneficiaries}</p>
                   </div>
                 </div>
-              )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10">
-                  <p className="text-[10px] text-gray-400 mb-1 uppercase tracking-widest">Bütçe</p>
-                  <p className="text-lg font-bold text-white">{selectedProject.budget}</p>
+                <div className="bg-gradient-to-br from-blue-500/10 to-emerald-500/10 rounded-xl p-5 border border-blue-500/20">
+                  <h4 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                    Özellikler
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {selectedProject.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-2 text-gray-300">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
+                        <span className="text-xs leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 border border-white/10">
-                  <p className="text-[10px] text-gray-400 mb-1 uppercase tracking-widest">Faydalanıcı</p>
-                  <p className="text-lg font-bold text-white">{selectedProject.beneficiaries}</p>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-blue-500/10 to-emerald-500/10 rounded-xl p-5 border border-blue-500/20">
-                <h4 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  Özellikler
-                </h4>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {selectedProject.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2 text-gray-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
-                      <span className="text-xs leading-relaxed">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
-        </div>
+        </Portal>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Portal } from './Portal';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -31,6 +32,7 @@ const categories = [
   { value: 'infrastructure', label: 'Altyapı', icon: Building2, color: '#8B5CF6' },
   { value: 'technology', label: 'Teknoloji', icon: Wifi, color: '#06B6D4' },
 ];
+
 
 export const CitizenIdeas: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -472,367 +474,373 @@ export const CitizenIdeas: React.FC = () => {
       </div>
 
       {showForm && (
-        <div
-          className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 md:p-6 animate-in fade-in duration-300"
-          onClick={() => setShowForm(false)}
-        >
+        <Portal>
           <div
-            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-4 max-h-[95vh] flex flex-col animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 md:p-6 animate-in fade-in duration-300"
+            onClick={() => setShowForm(false)}
           >
-            <div className="p-6 md:p-10 overflow-y-auto">
-              <div className="flex items-start justify-between mb-8">
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-2">Fikir Gönder</h3>
-                  <p className="text-gray-400">
-                    Akıllı şehir için fikirlerinizi bizimle paylaşın
-                  </p>
-                </div>
-                <button
-                  onClick={() => setShowForm(false)}
-                  className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
-                  aria-label="Kapat"
-                >
-                  <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div
+              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-4 max-h-[95vh] flex flex-col animate-in zoom-in-95 duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 md:p-10 overflow-y-auto">
+                <div className="flex items-start justify-between mb-8">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Adınız Soyadınız
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                      placeholder="Ad Soyad"
-                    />
+                    <h3 className="text-3xl font-bold text-white mb-2">Fikir Gönder</h3>
+                    <p className="text-gray-400">
+                      Akıllı şehir için fikirlerinizi bizimle paylaşın
+                    </p>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      E-posta Adresiniz
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                      placeholder="ornek@email.com"
-                    />
-                  </div>
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
+                    aria-label="Kapat"
+                  >
+                    <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Kategori
-                    </label>
-                    <select
-                      required
-                      value={formData.category}
-                      onChange={(e) =>
-                        setFormData({ ...formData, category: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                    >
-                      <option value="" className="bg-gray-800">
-                        Kategori Seçin
-                      </option>
-                      {categories.map((cat) => (
-                        <option
-                          key={cat.value}
-                          value={cat.value}
-                          className="bg-gray-800"
-                        >
-                          {cat.label}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        Adınız Soyadınız
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        placeholder="Ad Soyad"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        E-posta Adresiniz
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        placeholder="ornek@email.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        Kategori
+                      </label>
+                      <select
+                        required
+                        value={formData.category}
+                        onChange={(e) =>
+                          setFormData({ ...formData, category: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      >
+                        <option value="" className="bg-gray-800">
+                          Kategori Seçin
                         </option>
-                      ))}
-                    </select>
+                        {categories.map((cat) => (
+                          <option
+                            key={cat.value}
+                            value={cat.value}
+                            className="bg-gray-800"
+                          >
+                            {cat.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        İlçe/Bölge (Opsiyonel)
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.location}
+                        onChange={(e) =>
+                          setFormData({ ...formData, location: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        placeholder="İzmit, Gebze..."
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      İlçe/Bölge (Opsiyonel)
+                      Fikir Başlığı
                     </label>
                     <input
                       type="text"
-                      value={formData.location}
+                      required
+                      value={formData.title}
                       onChange={(e) =>
-                        setFormData({ ...formData, location: e.target.value })
+                        setFormData({ ...formData, title: e.target.value })
                       }
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                      placeholder="İzmit, Gebze..."
+                      placeholder="Fikrinizi kısaca özetleyin"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">
-                    Fikir Başlığı
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.title}
-                    onChange={(e) =>
-                      setFormData({ ...formData, title: e.target.value })
-                    }
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                    placeholder="Fikrinizi kısaca özetleyin"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">
-                    Açıklama
-                  </label>
-                  <textarea
-                    required
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
-                    placeholder="Fikrinizi detaylı olarak açıklayın..."
-                  />
-                </div>
-
-                <div className="space-y-4 bg-white/5 rounded-xl p-5 border border-white/10">
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="allowPublish"
-                      checked={formData.allowPublish}
-                      onChange={(e) =>
-                        setFormData({ ...formData, allowPublish: e.target.checked })
-                      }
-                      className="w-5 h-5 mt-0.5 rounded bg-white/10 border-white/20 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 cursor-pointer"
-                    />
-                    <label htmlFor="allowPublish" className="text-sm text-gray-300 cursor-pointer">
-                      Fikrimin web sitesinde yayınlanmasını onaylıyorum. (Yayınlanmasını istemiyorsanız bu kutucuğu işaretlemeyin)
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Açıklama
                     </label>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="acceptKvkk"
+                    <textarea
                       required
-                      checked={formData.acceptKvkk}
+                      value={formData.description}
                       onChange={(e) =>
-                        setFormData({ ...formData, acceptKvkk: e.target.checked })
+                        setFormData({ ...formData, description: e.target.value })
                       }
-                      className="w-5 h-5 mt-0.5 rounded bg-white/10 border-white/20 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 cursor-pointer"
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
+                      placeholder="Fikrinizi detaylı olarak açıklayın..."
                     />
-                    <label htmlFor="acceptKvkk" className="text-sm text-gray-300 cursor-pointer">
-                      <a href="#" className="text-emerald-400 hover:text-emerald-300 underline" onClick={(e) => e.preventDefault()}>KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum. <span className="text-red-400">*</span>
-                    </label>
                   </div>
 
-                  <div className="bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-lg p-4 border border-emerald-500/20">
+                  <div className="space-y-4 bg-white/5 rounded-xl p-5 border border-white/10">
                     <div className="flex items-start gap-3">
-                      <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-sm font-semibold text-emerald-300 mb-1">Katılım Sertifikası</p>
-                        <p className="text-xs text-gray-400">Fikir paylaşımınız onaylandığında size dijital bir katılım sertifikası gönderilecektir.</p>
+                      <input
+                        type="checkbox"
+                        id="allowPublish"
+                        checked={formData.allowPublish}
+                        onChange={(e) =>
+                          setFormData({ ...formData, allowPublish: e.target.checked })
+                        }
+                        className="w-5 h-5 mt-0.5 rounded bg-white/10 border-white/20 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 cursor-pointer"
+                      />
+                      <label htmlFor="allowPublish" className="text-sm text-gray-300 cursor-pointer">
+                        Fikrimin web sitesinde yayınlanmasını onaylıyorum. (Yayınlanmasını istemiyorsanız bu kutucuğu işaretlemeyin)
+                      </label>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        id="acceptKvkk"
+                        required
+                        checked={formData.acceptKvkk}
+                        onChange={(e) =>
+                          setFormData({ ...formData, acceptKvkk: e.target.checked })
+                        }
+                        className="w-5 h-5 mt-0.5 rounded bg-white/10 border-white/20 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 cursor-pointer"
+                      />
+                      <label htmlFor="acceptKvkk" className="text-sm text-gray-300 cursor-pointer">
+                        <a href="#" className="text-emerald-400 hover:text-emerald-300 underline" onClick={(e) => e.preventDefault()}>KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum. <span className="text-red-400">*</span>
+                      </label>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-lg p-4 border border-emerald-500/20">
+                      <div className="flex items-start gap-3">
+                        <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-emerald-300 mb-1">Katılım Sertifikası</p>
+                          <p className="text-xs text-gray-400">Fikir paylaşımınız onaylandığında size dijital bir katılım sertifikası gönderilecektir.</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                    className="flex-1 px-6 py-3 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/15 border border-white/20 transition-all"
-                  >
-                    İptal
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={submitting || !formData.acceptKvkk}
-                    className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {submitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Gönderiliyor...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        <span>Gönder</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowForm(false)}
+                      className="flex-1 px-6 py-3 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/15 border border-white/20 transition-all"
+                    >
+                      İptal
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={submitting || !formData.acceptKvkk}
+                      className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {submitting ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Gönderiliyor...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          <span>Gönder</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </Portal>
       )}
 
       {selectedIdea && (
-        <div
-          className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[2000] p-4 overflow-y-auto animate-in fade-in duration-200"
-          onClick={() => setSelectedIdea(null)}
-        >
+        <Portal>
           <div
-            className="bg-gradient-to-br from-gray-800/98 to-gray-900/98 backdrop-blur-xl rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-8 animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[2000] p-4 overflow-y-auto animate-in fade-in duration-200"
+            onClick={() => setSelectedIdea(null)}
           >
-            <div className="p-8">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-start gap-4 flex-1">
-                  <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/30"
-                    style={{
-                      backgroundColor: `${getCategoryIcon(selectedIdea.category).color}40`,
-                    }}
-                  >
-                    {React.createElement(getCategoryIcon(selectedIdea.category).icon, {
-                      className: 'w-8 h-8',
-                      style: { color: getCategoryIcon(selectedIdea.category).color },
-                    })}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold backdrop-blur-xl border ${getStatusBadge(selectedIdea.status).color
-                          }`}
-                      >
-                        {getStatusBadge(selectedIdea.status).label}
-                      </span>
-                      <span className="text-sm font-semibold text-blue-400">
-                        {getCategoryIcon(selectedIdea.category).label}
-                      </span>
+            <div
+              className="bg-gradient-to-br from-gray-800/98 to-gray-900/98 backdrop-blur-xl rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-8 animate-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-8">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-start gap-4 flex-1">
+                    <div
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/30"
+                      style={{
+                        backgroundColor: `${getCategoryIcon(selectedIdea.category).color}40`,
+                      }}
+                    >
+                      {React.createElement(getCategoryIcon(selectedIdea.category).icon, {
+                        className: 'w-8 h-8',
+                        style: { color: getCategoryIcon(selectedIdea.category).color },
+                      })}
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-2">
-                      {selectedIdea.title}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
-                      <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
-                        <span>{selectedIdea.name}</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-bold backdrop-blur-xl border ${getStatusBadge(selectedIdea.status).color
+                            }`}
+                        >
+                          {getStatusBadge(selectedIdea.status).label}
+                        </span>
+                        <span className="text-sm font-semibold text-blue-400">
+                          {getCategoryIcon(selectedIdea.category).label}
+                        </span>
                       </div>
-                      {selectedIdea.location && (
+                      <h3 className="text-3xl font-bold text-white mb-2">
+                        {selectedIdea.title}
+                      </h3>
+                      <div className="flex items-center gap-4 text-sm text-gray-400">
                         <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          <span>{selectedIdea.location}</span>
+                          <Users className="w-4 h-4" />
+                          <span>{selectedIdea.name}</span>
                         </div>
-                      )}
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        <span>{formatDate(selectedIdea.created_at)}</span>
+                        {selectedIdea.location && (
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            <span>{selectedIdea.location}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          <span>{formatDate(selectedIdea.created_at)}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() => setSelectedIdea(null)}
+                    className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group flex-shrink-0"
+                    aria-label="Kapat"
+                  >
+                    <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setSelectedIdea(null)}
-                  className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group flex-shrink-0"
-                  aria-label="Kapat"
-                >
-                  <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
-                </button>
-              </div>
 
-              <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-6 mb-6 border border-white/10">
-                <p className="text-gray-300 text-base leading-relaxed whitespace-pre-wrap">
-                  {selectedIdea.description}
-                </p>
-              </div>
+                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-6 mb-6 border border-white/10">
+                  <p className="text-gray-300 text-base leading-relaxed whitespace-pre-wrap">
+                    {selectedIdea.description}
+                  </p>
+                </div>
 
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={() => handleLike(selectedIdea.id, selectedIdea.likes)}
-                  className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500/20 to-blue-500/20 hover:from-emerald-500/30 hover:to-blue-500/30 border border-emerald-500/30 transition-all group"
-                >
-                  <Heart className="w-5 h-5 text-emerald-400 group-hover:fill-emerald-400 transition-all" />
-                  <span className="text-white font-bold">{selectedIdea.likes}</span>
-                  <span className="text-gray-300">Beğeni</span>
-                </button>
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={() => handleLike(selectedIdea.id, selectedIdea.likes)}
+                    className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500/20 to-blue-500/20 hover:from-emerald-500/30 hover:to-blue-500/30 border border-emerald-500/30 transition-all group"
+                  >
+                    <Heart className="w-5 h-5 text-emerald-400 group-hover:fill-emerald-400 transition-all" />
+                    <span className="text-white font-bold">{selectedIdea.likes}</span>
+                    <span className="text-gray-300">Beğeni</span>
+                  </button>
 
-                {selectedIdea.status === 'implemented' && (
-                  <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30">
-                    <CheckCircle2 className="w-5 h-5 text-purple-400" />
-                    <span className="text-white font-bold">Uygulandı!</span>
-                  </div>
-                )}
+                  {selectedIdea.status === 'implemented' && (
+                    <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30">
+                      <CheckCircle2 className="w-5 h-5 text-purple-400" />
+                      <span className="text-white font-bold">Uygulandı!</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Portal>
       )}
 
       {showSuccessCertificate && (
-        <div
-          className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300"
-          onClick={() => setShowSuccessCertificate(false)}
-        >
+        <Portal>
           <div
-            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-2xl w-full border border-emerald-500/30 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300"
+            onClick={() => setShowSuccessCertificate(false)}
           >
-            <div className="p-8 text-center relative">
-              <button
-                onClick={() => setShowSuccessCertificate(false)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
-              >
-                <X className="w-5 h-5 text-gray-400 group-hover:text-white" />
-              </button>
-              <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
-                <CheckCircle2 className="w-10 h-10 text-emerald-400" />
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-4">Fikriniz Alındı!</h3>
-              <p className="text-gray-300 mb-8">
-                Değerli katkılarınız için teşekkür ederiz. İşte size özel katılım sertifikası:
-              </p>
-
-              <div className="relative group rounded-2xl overflow-hidden border border-white/10 mb-8 max-h-[40vh]">
-                <img
-                  src="/fikir-seetifika.png"
-                  alt="Katılım Sertifikası"
-                  className="w-full h-full object-contain"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <p className="text-white font-semibold flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-yellow-400" />
-                    Tebrikler!
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="/fikir-seetifika.png"
-                  download="KBB-AkilliSehir-Katilim-Sertifikasi.png"
-                  className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold text-lg hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300"
-                >
-                  <Send className="w-5 h-5 rotate-90" />
-                  <span>Sertifikayı İndir</span>
-                </a>
+            <div
+              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-2xl w-full border border-emerald-500/30 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-8 text-center relative">
                 <button
                   onClick={() => setShowSuccessCertificate(false)}
-                  className="flex-1 px-8 py-4 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/15 border border-white/20 transition-all"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
                 >
-                  Kapat
+                  <X className="w-5 h-5 text-gray-400 group-hover:text-white" />
                 </button>
+                <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+                  <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-4">Fikriniz Alındı!</h3>
+                <p className="text-gray-300 mb-8">
+                  Değerli katkılarınız için teşekkür ederiz. İşte size özel katılım sertifikası:
+                </p>
+
+                <div className="relative group rounded-2xl overflow-hidden border border-white/10 mb-8 max-h-[40vh]">
+                  <img
+                    src="/fikir-sertifika.png"
+                    alt="Katılım Sertifikası"
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <p className="text-white font-semibold flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-yellow-400" />
+                      Tebrikler!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href="/fikir-sertifika.png"
+                    download="KBB-AkilliSehir-Katilim-Sertifikasi.png"
+                    className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold text-lg hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300"
+                  >
+                    <Send className="w-5 h-5 rotate-90" />
+                    <span>Sertifikayı İndir</span>
+                  </a>
+                  <button
+                    onClick={() => setShowSuccessCertificate(false)}
+                    className="flex-1 px-8 py-4 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/15 border border-white/20 transition-all"
+                  >
+                    Kapat
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Portal>
       )}
     </div>
   );
