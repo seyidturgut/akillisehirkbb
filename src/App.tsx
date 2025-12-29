@@ -298,13 +298,8 @@ function App() {
         </div>
       </div>
 
-      <div className="relative z-10">
-        <FeaturedProjects />
-      </div>
-
-      <div className="relative z-10">
-        <CitizenIdeas />
-      </div>
+      <FeaturedProjects />
+      <CitizenIdeas />
 
       <footer id="contact" className="relative z-20 bg-gray-950 text-white py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-20">

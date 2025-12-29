@@ -40,7 +40,7 @@ export const CitizenIdeas: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [showSuccessCertificate, setShowSuccessCertificate] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -199,6 +199,7 @@ export const CitizenIdeas: React.FC = () => {
       });
       setShowForm(false);
       setSubmitting(false);
+      setShowSuccessCertificate(true);
     }, 1000);
   };
 
@@ -267,7 +268,7 @@ export const CitizenIdeas: React.FC = () => {
   };
 
   return (
-    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden bg-gray-900 z-10">
+    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden bg-gray-900">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-blue-500/20 border border-emerald-500/30 mb-6">
@@ -472,15 +473,15 @@ export const CitizenIdeas: React.FC = () => {
 
       {showForm && (
         <div
-          className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 md:p-6 animate-in fade-in duration-300"
           onClick={() => setShowForm(false)}
         >
           <div
-            className="bg-gradient-to-br from-gray-800/98 to-gray-900/98 backdrop-blur-xl rounded-3xl max-w-2xl w-full border border-white/20 shadow-2xl my-8 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200"
+            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-4 max-h-[95vh] flex flex-col animate-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 md:p-8">
-              <div className="flex items-center justify-between mb-6">
+            <div className="p-6 md:p-10 overflow-y-auto">
+              <div className="flex items-start justify-between mb-8">
                 <div>
                   <h3 className="text-3xl font-bold text-white mb-2">Fikir Gönder</h3>
                   <p className="text-gray-400">
@@ -489,9 +490,10 @@ export const CitizenIdeas: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setShowForm(false)}
-                  className="w-10 h-10 rounded-full bg-gray-700/50 hover:bg-gray-700 flex items-center justify-center transition-colors"
+                  className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
+                  aria-label="Kapat"
                 >
-                  <X className="w-5 h-5 text-white" />
+                  <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
                 </button>
               </div>
 
@@ -683,11 +685,11 @@ export const CitizenIdeas: React.FC = () => {
 
       {selectedIdea && (
         <div
-          className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 overflow-y-auto animate-in fade-in duration-200"
+          className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-[2000] p-4 overflow-y-auto animate-in fade-in duration-200"
           onClick={() => setSelectedIdea(null)}
         >
           <div
-            className="bg-gradient-to-br from-gray-800/98 to-gray-900/98 backdrop-blur-xl rounded-3xl max-w-3xl w-full border border-white/20 shadow-2xl my-8 animate-in zoom-in-95 duration-200"
+            className="bg-gradient-to-br from-gray-800/98 to-gray-900/98 backdrop-blur-xl rounded-3xl max-w-4xl w-full border border-white/20 shadow-2xl my-8 animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-8">
@@ -739,9 +741,10 @@ export const CitizenIdeas: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setSelectedIdea(null)}
-                  className="w-10 h-10 rounded-full bg-gray-700/50 hover:bg-gray-700 flex items-center justify-center transition-colors flex-shrink-0"
+                  className="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group flex-shrink-0"
+                  aria-label="Kapat"
                 >
-                  <X className="w-5 h-5 text-white" />
+                  <X className="w-6 h-6 text-gray-300 group-hover:text-white group-hover:scale-110" />
                 </button>
               </div>
 
@@ -749,17 +752,6 @@ export const CitizenIdeas: React.FC = () => {
                 <p className="text-gray-300 text-base leading-relaxed whitespace-pre-wrap">
                   {selectedIdea.description}
                 </p>
-                {selectedIdea.image_url && (
-                  <div className="mt-6">
-                    <img
-                      src={selectedIdea.image_url}
-                      alt={selectedIdea.title}
-                      className="w-full h-auto rounded-xl cursor-pointer hover:opacity-90 transition-opacity border border-white/10"
-                      onClick={() => setLightboxImage(selectedIdea.image_url!)}
-                    />
-                    <p className="text-xs text-gray-400 mt-2 text-center italic">Resmi büyütmek için tıklayın</p>
-                  </div>
-                )}
               </div>
 
               <div className="flex items-center justify-between">
@@ -783,30 +775,65 @@ export const CitizenIdeas: React.FC = () => {
           </div>
         </div>
       )}
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300 cursor-zoom-out"
-          onClick={() => setLightboxImage(null)}
-        >
-          <div className="relative w-full h-full flex items-center justify-center">
-            <button
-              onClick={() => setLightboxImage(null)}
-              className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition-all group z-50"
-              aria-label="Kapat"
-            >
-              <X className="w-6 h-6 text-white group-hover:scale-110" />
-            </button>
 
-            <img
-              src={lightboxImage}
-              alt="Büyük Görünüm"
-              className="max-w-[95vw] max-h-[95vh] object-contain rounded-sm shadow-2xl animate-in zoom-in-95 duration-300 cursor-default"
-              onClick={(e) => e.stopPropagation()}
-            />
+      {showSuccessCertificate && (
+        <div
+          className="fixed inset-0 bg-gray-900/98 backdrop-blur-md flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300"
+          onClick={() => setShowSuccessCertificate(false)}
+        >
+          <div
+            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-2xl w-full border border-emerald-500/30 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-8 text-center relative">
+              <button
+                onClick={() => setShowSuccessCertificate(false)}
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all group"
+              >
+                <X className="w-5 h-5 text-gray-400 group-hover:text-white" />
+              </button>
+              <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+                <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-white mb-4">Fikriniz Alındı!</h3>
+              <p className="text-gray-300 mb-8">
+                Değerli katkılarınız için teşekkür ederiz. İşte size özel katılım sertifikası:
+              </p>
+
+              <div className="relative group rounded-2xl overflow-hidden border border-white/10 mb-8 max-h-[40vh]">
+                <img
+                  src="/fikir-seetifika.png"
+                  alt="Katılım Sertifikası"
+                  className="w-full h-full object-contain"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <p className="text-white font-semibold flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-yellow-400" />
+                    Tebrikler!
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="/fikir-seetifika.png"
+                  download="KBB-AkilliSehir-Katilim-Sertifikasi.png"
+                  className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold text-lg hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300"
+                >
+                  <Send className="w-5 h-5 rotate-90" />
+                  <span>Sertifikayı İndir</span>
+                </a>
+                <button
+                  onClick={() => setShowSuccessCertificate(false)}
+                  className="flex-1 px-8 py-4 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/15 border border-white/20 transition-all"
+                >
+                  Kapat
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 };
-
