@@ -284,7 +284,7 @@ function App() {
           <img
             src="https://beyincikisleri.co/customer/akillikbb/kbb-isometrik.png"
             alt="Kocaeli İzometrik Harita"
-            className="w-full h-full object-cover opacity-85"
+            className="w-full h-full object-cover opacity-100"
           />
         </div>
         <div className="relative h-screen flex items-center justify-center p-8">
