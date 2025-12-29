@@ -16,12 +16,15 @@ export const MobileARComplaint: React.FC<MobileARComplaintProps> = ({ onCancel, 
     const [category, setCategory] = useState<ComplaintCategory | null>(null);
     const [snapshot, setSnapshot] = useState<string | null>(null);
 
+    const streamRef = useRef<MediaStream | null>(null);
+
     useEffect(() => {
         const startCamera = async () => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: 'environment' }
                 });
+                streamRef.current = stream;
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                     setHasPermission(true);
@@ -32,8 +35,9 @@ export const MobileARComplaint: React.FC<MobileARComplaintProps> = ({ onCancel, 
         };
         startCamera();
         return () => {
-            if (videoRef.current?.srcObject) {
-                (videoRef.current.srcObject as MediaStream).getTracks().forEach(t => t.stop());
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach(t => t.stop());
+                streamRef.current = null;
             }
         };
     }, []);

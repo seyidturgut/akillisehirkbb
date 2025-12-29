@@ -16,7 +16,7 @@ export const DataBalloon: React.FC<DataBalloonProps> = ({ data, className = '' }
                     <Wind className="w-5 h-5" />
                 </div>
                 <div>
-                    <span className="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">Air Quality</span>
+                    <span className="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">Hava Kalitesi</span>
                     <span className="block text-white font-bold leading-tight">AQI {Math.round(data.airQuality.value)} — {data.airQuality.label}</span>
                 </div>
             </div>
@@ -27,7 +27,7 @@ export const DataBalloon: React.FC<DataBalloonProps> = ({ data, className = '' }
                     <Activity className="w-5 h-5" />
                 </div>
                 <div>
-                    <span className="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">Traffic Density</span>
+                    <span className="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">Trafik Yoğunluğu</span>
                     <span className="block text-white font-bold leading-tight">%{Math.round(data.traffic.density)} — {data.traffic.status}</span>
                 </div>
             </div>

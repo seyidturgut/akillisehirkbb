@@ -11,12 +11,15 @@ export const MobileAR: React.FC<MobileARProps> = ({ onSelectPOI }) => {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    const streamRef = useRef<MediaStream | null>(null);
+
     useEffect(() => {
         const startCamera = async () => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: 'environment' }
                 });
+                streamRef.current = stream;
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                     setHasPermission(true);
@@ -31,9 +34,9 @@ export const MobileAR: React.FC<MobileARProps> = ({ onSelectPOI }) => {
         startCamera();
 
         return () => {
-            if (videoRef.current?.srcObject) {
-                const stream = videoRef.current.srcObject as MediaStream;
-                stream.getTracks().forEach(track => track.stop());
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach(track => track.stop());
+                streamRef.current = null;
             }
         };
     }, []);
