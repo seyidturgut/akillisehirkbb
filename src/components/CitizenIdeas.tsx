@@ -7,7 +7,6 @@ import {
   Heart,
   MapPin,
   Clock,
-  TrendingUp,
   Users,
   Sparkles,
   CheckCircle2,
@@ -41,6 +40,7 @@ export const CitizenIdeas: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -202,7 +202,7 @@ export const CitizenIdeas: React.FC = () => {
     }, 1000);
   };
 
-  const handleLike = async (ideaId: string, currentLikes: number) => {
+  const handleLike = async (ideaId: string, _currentLikes: number) => {
     // Optimistically update UI
     setIdeas(prev => prev.map(idea =>
       idea.id === ideaId ? { ...idea, likes: idea.likes + 1 } : idea
@@ -749,6 +749,17 @@ export const CitizenIdeas: React.FC = () => {
                 <p className="text-gray-300 text-base leading-relaxed whitespace-pre-wrap">
                   {selectedIdea.description}
                 </p>
+                {selectedIdea.image_url && (
+                  <div className="mt-6">
+                    <img
+                      src={selectedIdea.image_url}
+                      alt={selectedIdea.title}
+                      className="w-full h-auto rounded-xl cursor-pointer hover:opacity-90 transition-opacity border border-white/10"
+                      onClick={() => setLightboxImage(selectedIdea.image_url!)}
+                    />
+                    <p className="text-xs text-gray-400 mt-2 text-center italic">Resmi büyütmek için tıklayın</p>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
@@ -772,6 +783,26 @@ export const CitizenIdeas: React.FC = () => {
           </div>
         </div>
       )}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            onClick={() => setLightboxImage(null)}
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all group z-[2001]"
+          >
+            <X className="w-6 h-6 text-white group-hover:scale-110" />
+          </button>
+          <img
+            src={lightboxImage}
+            alt="Büyük Görünüm"
+            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };
+

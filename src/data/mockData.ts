@@ -8,6 +8,7 @@ export interface CitizenIdea {
     title: string;
     description: string;
     location?: string;
+    image_url?: string;
     status: 'pending' | 'reviewing' | 'approved' | 'implemented';
     likes: number;
     created_at: string;
@@ -97,6 +98,7 @@ export const mockCitizenIdeas: CitizenIdea[] = [
         location: 'İzmit',
         status: 'reviewing',
         likes: 45,
+        image_url: '/fikir-seetifika.png',
         created_at: new Date(Date.now() - 86400000).toISOString(),
         updated_at: new Date().toISOString()
     },
