@@ -16,6 +16,8 @@ import { ARCityGuide } from './features/ARCityGuide/components/ARCityGuide';
 import { ARComplaint } from './features/ARComplaint/components/ARComplaint';
 import { CityDataOverlay } from './features/CityDataOverlay/components/CityDataOverlay';
 import { ARToolbox } from './features/ARToolbox/components/ARToolbox';
+import { ARFeaturesModal } from './features/ARToolbox/components/ARFeaturesModal';
+import { useDeviceDetection } from './features/ARCityGuide/hooks/useDevice';
 import { MapPin, Globe, AlertCircle, BarChart2 } from 'lucide-react';
 import { CityZone } from './lib/supabase';
 import { mockZones } from './data/mockData';
@@ -37,6 +39,8 @@ function App() {
   const [showARGuide, setShowARGuide] = useState(false);
   const [showARComplaint, setShowARComplaint] = useState(false);
   const [showDataOverlay, setShowDataOverlay] = useState(false);
+  const [showARMenuModal, setShowARMenuModal] = useState(false);
+  const { isMobile } = useDeviceDetection();
   const mapSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -235,7 +239,7 @@ function App() {
         </div>
 
         <div className="relative z-10">
-          <Hero videoRef={videoRef} />
+          <Hero videoRef={videoRef} onTriggerAR={() => setShowARMenuModal(true)} />
 
           <div id="data">
             <LiveCityData containerRef={dataSectionRef} />
@@ -310,12 +314,23 @@ function App() {
         )}
       </div>
 
-      {/* AR Features Launcher (Consolidated Drawer) */}
-      <ARToolbox
-        onOpenGuide={() => setShowARGuide(true)}
-        onOpenComplaint={() => setShowARComplaint(true)}
-        onOpenData={() => setShowDataOverlay(true)}
-      />
+      {/* AR Features Launcher (Consolidated Drawer - Hidden on Mobile Hero Trigger) */}
+      {!isMobile && (
+        <ARToolbox
+          onOpenGuide={() => setShowARGuide(true)}
+          onOpenComplaint={() => setShowARComplaint(true)}
+          onOpenData={() => setShowDataOverlay(true)}
+        />
+      )}
+
+      {showARMenuModal && (
+        <ARFeaturesModal
+          onClose={() => setShowARMenuModal(false)}
+          onOpenGuide={() => setShowARGuide(true)}
+          onOpenComplaint={() => setShowARComplaint(true)}
+          onOpenData={() => setShowDataOverlay(true)}
+        />
+      )}
 
       {showARGuide && (
         <ARCityGuide onClose={() => setShowARGuide(false)} />

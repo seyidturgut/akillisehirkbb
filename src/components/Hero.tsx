@@ -7,9 +7,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface HeroProps {
   videoRef: React.RefObject<HTMLVideoElement>;
+  onTriggerAR: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ videoRef }) => {
+export const Hero: React.FC<HeroProps> = ({ videoRef, onTriggerAR }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
 
@@ -104,9 +105,19 @@ export const Hero: React.FC<HeroProps> = ({ videoRef }) => {
         <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white drop-shadow-2xl">
           Akıllı Şehir Kocaeli
         </h1>
-        <p className="hero-subtitle text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed drop-shadow-lg font-light">
+        <p className="hero-subtitle text-xl md:text-2xl lg:text-3xl text-white/90 mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-lg font-light">
           Akıllı çözümlerle şekillenen Kocaeli'nin geleceği
         </p>
+
+        {/* AR Entry Point for Mobile/Desktop */}
+        <button
+          onClick={onTriggerAR}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 mb-12 border border-white/20 group animate-in slide-in-from-bottom-5 delay-500 fill-mode-backwards"
+        >
+          <Globe className="w-6 h-6 animate-pulse" />
+          <span>AR Özelliklerini Keşfet</span>
+          <div className="w-2 h-2 bg-green-400 rounded-full" />
+        </button>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
           {cards.map((card, index) => (
