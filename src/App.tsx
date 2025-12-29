@@ -12,6 +12,8 @@ import { TabbedStatsSection } from './components/TabbedStatsSection';
 import { FeaturedProjects } from './components/FeaturedProjects';
 import { CitizenIdeas } from './components/CitizenIdeas';
 import { LoadingScreen } from './components/LoadingScreen';
+import { ARCityGuide } from './features/ARCityGuide/components/ARCityGuide';
+import { MapPin, Globe } from 'lucide-react';
 import { CityZone } from './lib/supabase';
 import { mockZones } from './data/mockData';
 
@@ -29,6 +31,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [showARGuide, setShowARGuide] = useState(false);
   const mapSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -301,6 +304,31 @@ function App() {
           <ProjectModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
         )}
       </div>
+
+      {/* AR City Guide Toggle & Module */}
+      <div className="fixed bottom-8 left-8 z-[1000]">
+        <button
+          onClick={() => setShowARGuide(true)}
+          className="group relative flex items-center gap-3 px-6 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 active:scale-95"
+        >
+          <div className="relative">
+            <Globe className="w-6 h-6 animate-pulse" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 border-2 border-blue-600 rounded-full" />
+          </div>
+          <span className="max-w-[0px] overflow-hidden whitespace-nowrap group-hover:max-w-[200px] transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+            Şehri Keşfet (AR)
+          </span>
+
+          {/* Tooltip hint for desktop */}
+          <div className="absolute bottom-full left-0 mb-4 px-3 py-2 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-lg text-xs font-medium text-blue-200 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none translate-y-2 group-hover:translate-y-0 duration-300">
+            AR Rehberi & Etkileşimli Görünüm
+          </div>
+        </button>
+      </div>
+
+      {showARGuide && (
+        <ARCityGuide onClose={() => setShowARGuide(false)} />
+      )}
     </div>
   );
 }
