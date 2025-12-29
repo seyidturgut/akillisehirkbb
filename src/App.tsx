@@ -15,7 +15,6 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { ARCityGuide } from './features/ARCityGuide/components/ARCityGuide';
 import { ARComplaint } from './features/ARComplaint/components/ARComplaint';
 import { CityDataOverlay } from './features/CityDataOverlay/components/CityDataOverlay';
-import { ARToolbox } from './features/ARToolbox/components/ARToolbox';
 import { ARFeaturesModal } from './features/ARToolbox/components/ARFeaturesModal';
 import { useDeviceDetection } from './features/ARCityGuide/hooks/useDevice';
 import { MapPin, Globe, AlertCircle, BarChart2 } from 'lucide-react';
@@ -313,15 +312,6 @@ function App() {
           <ProjectModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
         )}
       </div>
-
-      {/* AR Features Launcher (Consolidated Drawer - Hidden on Mobile Hero Trigger) */}
-      {!isMobile && (
-        <ARToolbox
-          onOpenGuide={() => setShowARGuide(true)}
-          onOpenComplaint={() => setShowARComplaint(true)}
-          onOpenData={() => setShowDataOverlay(true)}
-        />
-      )}
 
       {showARMenuModal && (
         <ARFeaturesModal
