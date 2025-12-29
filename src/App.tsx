@@ -39,7 +39,6 @@ function App() {
   const [showARComplaint, setShowARComplaint] = useState(false);
   const [showDataOverlay, setShowDataOverlay] = useState(false);
   const [showARMenuModal, setShowARMenuModal] = useState(false);
-  const { isMobile } = useDeviceDetection();
   const mapSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);

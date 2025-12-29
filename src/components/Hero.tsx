@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ videoRef, onTriggerAR }) => {
   ];
 
   return (
-    <div id="home" ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <div id="home" ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 md:pt-0">
 
       <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full mb-6 border border-white/20">
