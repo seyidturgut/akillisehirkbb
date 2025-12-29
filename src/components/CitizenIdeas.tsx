@@ -785,21 +785,25 @@ export const CitizenIdeas: React.FC = () => {
       )}
       {lightboxImage && (
         <div
-          className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300"
+          className="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[2000] p-4 animate-in fade-in duration-300 cursor-zoom-out"
           onClick={() => setLightboxImage(null)}
         >
-          <button
-            onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all group z-[2001]"
-          >
-            <X className="w-6 h-6 text-white group-hover:scale-110" />
-          </button>
-          <img
-            src={lightboxImage}
-            alt="Büyük Görünüm"
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative w-full h-full flex items-center justify-center">
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition-all group z-50"
+              aria-label="Kapat"
+            >
+              <X className="w-6 h-6 text-white group-hover:scale-110" />
+            </button>
+
+            <img
+              src={lightboxImage}
+              alt="Büyük Görünüm"
+              className="max-w-[95vw] max-h-[95vh] object-contain rounded-sm shadow-2xl animate-in zoom-in-95 duration-300 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
         </div>
       )}
     </div>
