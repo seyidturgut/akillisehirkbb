@@ -21,10 +21,23 @@ export const CityMap: React.FC<CityMapProps> = ({ zones, activeZoneIndex = 0, on
 
   return (
     <div className="relative w-full h-full" onMouseMove={handleMouseMove}>
-      <ConnectionPaths zones={zones} activeIndex={activeZoneIndex} />
-      <DynamicCityElements />
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src="https://beyincikisleri.co/customer/akillikbb/sehir-bg-anim.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      {/* Dark mask for better icon contrast over video */}
+      <div className="absolute inset-0 bg-black/40" />
 
-      <div className="absolute inset-0" style={{ zIndex: 3, perspective: '2000px', transformStyle: 'preserve-3d' }}>
+      <div className="relative z-10 w-full h-full">
+        <ConnectionPaths zones={zones} activeIndex={activeZoneIndex} />
+        <DynamicCityElements />
+      </div>
+
+      <div className="absolute inset-0" style={{ zIndex: 20, perspective: '2000px', transformStyle: 'preserve-3d' }}>
         {zones.map((zone, index) => (
           <CityZoneComponent
             key={zone.id}
