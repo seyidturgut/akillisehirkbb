@@ -84,7 +84,7 @@ export const CitizenIdeas: React.FC = () => {
     const ctx = gsap.context(() => {
       const title = sectionRef.current!.querySelector('.ideas-title');
       const subtitle = sectionRef.current!.querySelector('.ideas-subtitle');
-      const submitButton = sectionRef.current!.querySelector('.submit-idea-btn');
+
       const categories = sectionRef.current!.querySelector('.category-filters');
       const cards = sectionRef.current!.querySelectorAll('.idea-card');
 
@@ -113,18 +113,7 @@ export const CitizenIdeas: React.FC = () => {
         },
       });
 
-      gsap.from(submitButton, {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.8,
-        delay: 0.3,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        },
-      });
+
 
       gsap.from(categories, {
         opacity: 0,
@@ -287,19 +276,7 @@ export const CitizenIdeas: React.FC = () => {
             Akıllı şehir Kocaeli'nin geleceğini birlikte şekillendirelim. Fikirleriniz değerli!
           </p>
 
-          <div className="flex flex-col items-center gap-4">
-            <button
-              onClick={() => setShowForm(true)}
-              className="submit-idea-btn inline-flex items-center gap-3 px-12 py-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold text-xl hover:scale-110 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 animate-pulse hover:animate-none"
-            >
-              <Lightbulb className="w-7 h-7" />
-              <span>Fikir Gönder</span>
-              <Send className="w-5 h-5" />
-            </button>
-            <p className="text-sm text-gray-400">
-              Şehrimizi geliştirmek için fikirlerinizi bizimle paylaşın
-            </p>
-          </div>
+
         </div>
 
         <div className="category-filters flex items-center justify-center gap-3 mb-12 flex-wrap">
